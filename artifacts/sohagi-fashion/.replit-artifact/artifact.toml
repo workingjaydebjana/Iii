@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Sohagi Fashion"
+description = "A premium, mobile-first fashion storefront for Sohagi Fashion in Contai, West Bengal, featuring women's clothing collections, store information, offers, gallery, reviews, and shopping guidance."
+version = "1.0.0"
+id = "artifacts/sohagi-fashion"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19161
+
+[services.development]
+run = "pnpm --filter @workspace/sohagi-fashion run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/sohagi-fashion", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/sohagi-fashion/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19161"
+BASE_PATH = "/"
